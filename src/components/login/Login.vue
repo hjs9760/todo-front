@@ -1,56 +1,197 @@
 <template>
-  <div>
-    <h2>Log In</h2>
-    <form @submit="onSubmit">
-      <input placeholder="Enter your ID" v-model="uid" />
-      <input placeholder="Enter your password" v-model="password" />
-      <button type="submit">Login</button>
-    </form>
-    <div class="alert-danger" v-if="errorState">
-      <!-- errorState가 있으면 표시한다 -->
-      <p></p>
-    </div>
+  <div class="login">
+    <el-card>
+      <h2 class="font">Login</h2>
+      <el-form
+        class="login-form"
+        :model="model"
+        ref="form"
+        @submit.native.prevent="login"
+      >
+        <el-form-item prop="username">
+          <el-input
+            v-model="model.username"
+            placeholder="아이디를 입력하세요."
+            prefix-icon="fas fa-lock"
+          ></el-input>
+        </el-form-item>
+        <el-form-item prop="password">
+          <el-input
+            v-model="model.password"
+            placeholder="암호를 입력하세요."
+            type="password"
+          ></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button
+            :loading="loading"
+            class="login-button"
+            type="primary"
+            native-type="submit"
+            >Login</el-button
+          >
+        </el-form-item>
+        <el-button
+          :loading="loading"
+          class="signup-button"
+          type="primary"
+          @click="goSignUp"
+          >SignUp</el-button
+        >
+        <br />
+
+        <a class="forgot-password" href="">Forgot password ?</a>
+      </el-form>
+    </el-card>
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex"; // mapGetters를 추가한다
-
 export default {
-  name: "Login",
-  data: () => ({
-    uid: "",
-    password: ""
-  }),
+  name: 'login',
+  data() {
+    return {
+      validCredentials: {
+        username: 'lightscope',
+        password: 'lightscope',
+      },
+      model: {
+        username: '',
+        password: '',
+      },
+      loading: false,
+      // rules: {
+      //   username: [
+      //     {
+      //       required: true,
+      //       message: 'Username is required',
+      //       trigger: 'blur',
+      //     },
+      //     {
+      //       min: 4,
+      //       message: 'Username length should be at least 5 characters',
+      //       trigger: 'blur',
+      //     },
+      //   ],
+      //   password: [
+      //     { required: true, message: 'Password is required', trigger: 'blur' },
+      //     {
+      //       min: 5,
+      //       message: 'Password length should be at least 5 characters',
+      //       trigger: 'blur',
+      //     },
+      //   ],
+      // },
+    };
+  },
   methods: {
-    ...mapActions(["login"]),
-    async onSubmit() {
-      try {
-        let loginResult = await this.login({
-          uid: this.uid,
-          password: this.password
-        });
-        if (loginResult) this.goToPages(); // 로그인 실패시 loginResult === false 이므로 goToPages 메소드는 실행되지 않는다.
-      } catch (err) {
-        console.error(err);
+    simulateLogin() {
+      return new Promise((resolve) => {
+        setTimeout(resolve, 800);
+      });
+    },
+    async login() {
+      let valid = await this.$refs.form.validate();
+      if (!valid) {
+        return;
+      }
+      this.loading = true;
+      await this.simulateLogin();
+      this.loading = false;
+      if (
+        this.model.username === this.validCredentials.username &&
+        this.model.password === this.validCredentials.password
+      ) {
+        this.$message.success('Login successfull');
+      } else {
+        this.$message.error('Username or password is invalid');
       }
     },
-    goToPages() {
-      this.$router.push({
-        name: "HelloWorld" // HelloWorld로 가자
-      });
-    }
+    goSignUp() {
+      this.$router.push('/signup');
+    },
   },
-  computed: {
-    ...mapGetters({
-      errorState: "getErrorState" // getter로 errorState를 받는다
-    })
-  }
 };
 </script>
 
+<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.alert-danger p {
-  color: red;
+.login {
+  flex: 0.5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-button {
+  width: 70%;
+  height: 25px;
+  margin-top: 30px;
+}
+.signup-button {
+  width: 70%;
+  height: 25px;
+}
+.login-form {
+  width: 290px;
+}
+.forgot-password {
+  margin-top: 10px;
+}
+</style>
+<style lang="scss">
+$teal: rgb(0, 124, 137);
+.el-button--primary {
+  background: $teal;
+  border-color: $teal;
+
+  &:hover,
+  &.active,
+  &:focus {
+    background: lighten($teal, 7);
+    border-color: lighten($teal, 7);
+  }
+}
+.login .el-input__inner:hover {
+  border-color: $teal;
+}
+.login .el-input__prefix {
+  background: rgb(238, 237, 234);
+  left: 0;
+  height: calc(100% - 2px);
+  left: 1px;
+  top: 1px;
+  border-radius: 3px;
+  .el-input__icon {
+    width: 30px;
+  }
+}
+
+.login .el-card {
+  padding-top: 0;
+  padding-bottom: 30px;
+}
+h2 {
+  font-family: 'Open Sans';
+  letter-spacing: 1px;
+  font-family: Roboto, sans-serif;
+  padding-bottom: 20px;
+}
+a {
+  color: $teal;
+  text-decoration: none;
+  &:hover,
+  &:active,
+  &:focus {
+    color: lighten($teal, 7);
+  }
+}
+.login .el-card {
+  width: 340px;
+  display: flex;
+  justify-content: center;
+}
+.font {
+  color: white;
 }
 </style>

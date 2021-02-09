@@ -1,17 +1,26 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Login from '@/components/login/Login'; // 로그인 컴포넌트를 import 한다
+import Index from '@/components/login/Index'; // 로그인 컴포넌트를 import
 import HelloWorld from '@/components/HelloWorld';
+import Signup from '@/components/login/Signup';
 
 Vue.use(Router);
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/', // 첫 화면을 로그인 화면으로 설정한다
-      name: 'Login',
-      component: Login,
+      name: 'Index',
+      component: Index,
     },
+    {
+      path: '/signup',
+      name: 'Info',
+      component: Signup,
+      // component: () => import('../login/Signup.vue'),
+    },
+
     {
       path: '/helloWorld', // 추가하는 path
       name: 'HelloWorld',
