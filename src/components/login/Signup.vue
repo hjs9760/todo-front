@@ -3,12 +3,10 @@
     <h2 class="header">TodoList</h2>
     <form @submit="goSignUp" onsubmit="return false;">
       <div class="text3">아이디</div>
-
       <span>
         <input v-model="id" minlength="4" maxlength="20" class="input_id" />
         <button @click.prevent="duplicatedId" class="button_id">중복확인</button>
       </span>
-
       <div class="blank" v-bind:class="{ blank_success: isId, blank_fail: isId_f }" v-text="idText"></div>
 
       <div class="text4">비밀번호</div>
@@ -103,7 +101,7 @@
       <div class="text2">성별</div>
       <input type="radio" v-model="gender" name="gender" value="man" @change="checkGender" />
       <span class="gender">남</span>
-      <input type="radio" v-model="gender" name="gender" value="woman" />
+      <input type="radio" v-model="gender" name="gender" value="woman" @change="checkGender" />
       <span class="gender">여</span>
       <div
         class="blank"
@@ -125,8 +123,8 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
 import axios from "axios";
+import { mapMutations } from "vuex";
 
 export default {
   data() {
@@ -169,8 +167,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["SIGNUP"]),
-
+    ...mapMutations(["SET_USERID"]),
     checkId() {
       let regExp = /^[A-Za-z0-9_]{4,20}$/;
 
@@ -314,14 +311,22 @@ export default {
         this.isGender &&
         this.isEmail
       ) {
-        axios.post("http://localhost:8080/member/signUp", {
-          userId: this.id,
-          pw: this.password,
-          name: this.name,
-          birth: this.yyyy + "-" + this.mm + "-" + this.dd,
-          gender: this.gender,
-          email: this.email
-        });
+        axios
+          .post("http://localhost:8080/member/signUp", {
+            userId: this.id,
+            pw: this.password,
+            name: this.name,
+            birth: this.yyyy + "-" + this.mm + "-" + this.dd,
+            gender: this.gender,
+            email: this.email
+          })
+          .then(res => {
+            if (res.data.code == 200) {
+              alert(res.data.message);
+              this.SET_USERID(this.id);
+              this.$router.push("/login");
+            }
+          });
       } else {
         alert("회원가입 정보를 제대로 입력해주세요.");
         return;

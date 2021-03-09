@@ -1,30 +1,50 @@
 import Vue from 'vue';
-import Router from 'vue-router';
-import Index from '@/components/login/Index'; // 로그인 컴포넌트를 import
-import HelloWorld from '@/components/HelloWorld';
-import Signup from '@/components/login/Signup';
+import VueRouter from 'vue-router';
+import store from '../store/index';
 
-Vue.use(Router);
+Vue.use(VueRouter);
 
-export default new Router({
+const requireAuth = () => (to, from, next) => {
+  if (store.state.token != 'undefined') {
+    return next();
+  }
+  alert('로그인 후 이용이 가능한 서비스입니다.');
+  next('/login');
+};
+
+const routes = [
+  {
+    path: '/main',
+    name: 'Main',
+    component: () => import('../views/Main.vue'),
+    beforeEnter: requireAuth(),
+  },
+  {
+    path: '/',
+    name: 'Login',
+    component: () => import('../components/login/Index.vue'),
+  },
+  {
+    path: '/signup',
+    name: 'Signup',
+    component: () => import('../components/login/Signup.vue'),
+  },
+  {
+    path: '/checkEmail',
+    name: 'CheckEmail',
+    component: () => import('../components/login/CheckEmail.vue'),
+  },
+
+  {
+    path: '/oauth-callback',
+    name: 'OauthCallBack',
+    component: () => import('../components/login/OauthCallBack.vue'),
+  },
+];
+
+const router = new VueRouter({
   mode: 'history',
-  routes: [
-    {
-      path: '/', // 첫 화면을 로그인 화면으로 설정한다
-      name: 'Index',
-      component: Index,
-    },
-    {
-      path: '/signup',
-      name: 'Info',
-      component: Signup,
-      // component: () => import('../login/Signup.vue'),
-    },
-
-    {
-      path: '/helloWorld', // 추가하는 path
-      name: 'HelloWorld',
-      component: HelloWorld, // 추가하는 컴포넌트
-    },
-  ],
+  routes: routes,
 });
+
+export default router;

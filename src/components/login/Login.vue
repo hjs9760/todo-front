@@ -2,91 +2,49 @@
   <div class="login">
     <el-card>
       <h2 class="font">Login</h2>
-      <el-form
-        class="login-form"
-        :model="model"
-        ref="form"
-        @submit.native.prevent="login"
-      >
+      <el-form class="login-form" :model="model" ref="form" @submit.native.prevent="login">
         <el-form-item prop="username">
-          <el-input
-            v-model="model.username"
-            placeholder="아이디를 입력하세요."
-            prefix-icon="fas fa-lock"
-          ></el-input>
+          <el-input v-model="model.username" placeholder="아이디를 입력하세요." prefix-icon="fas fa-lock"></el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input
-            v-model="model.password"
-            placeholder="암호를 입력하세요."
-            type="password"
-          ></el-input>
+          <el-input v-model="model.password" placeholder="암호를 입력하세요." type="password"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button
-            :loading="loading"
-            class="login-button"
-            type="primary"
-            native-type="submit"
-            >Login</el-button
-          >
+          <el-button :loading="loading" class="login-button" type="primary" @click="goSignIn">Login</el-button>
         </el-form-item>
-        <el-button
-          :loading="loading"
-          class="signup-button"
-          type="primary"
-          @click="goSignUp"
-          >SignUp</el-button
-        >
+        <el-button :loading="loading" class="signup-button" type="primary" @click="goSignUp">SignUp</el-button>
         <br />
 
-        <a class="forgot-password" href="">Forgot password ?</a>
+        <a class="forgot-password" href>Forgot password ?</a>
       </el-form>
     </el-card>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+import { mapMutations } from "vuex";
+
 export default {
-  name: 'login',
+  name: "login",
   data() {
     return {
-      validCredentials: {
-        username: 'lightscope',
-        password: 'lightscope',
-      },
-      model: {
-        username: '',
-        password: '',
-      },
-      loading: false,
-      // rules: {
-      //   username: [
-      //     {
-      //       required: true,
-      //       message: 'Username is required',
-      //       trigger: 'blur',
-      //     },
-      //     {
-      //       min: 4,
-      //       message: 'Username length should be at least 5 characters',
-      //       trigger: 'blur',
-      //     },
-      //   ],
-      //   password: [
-      //     { required: true, message: 'Password is required', trigger: 'blur' },
-      //     {
-      //       min: 5,
-      //       message: 'Password length should be at least 5 characters',
-      //       trigger: 'blur',
-      //     },
-      //   ],
+      // validCredentials: {
+      //   username: "lightscope",
+      //   password: "lightscope"
       // },
+      model: {
+        username: "",
+        password: ""
+      },
+      loading: false
     };
   },
   methods: {
+    ...mapMutations(["SET_USERINFO"]),
+
     simulateLogin() {
-      return new Promise((resolve) => {
+      return new Promise(resolve => {
         setTimeout(resolve, 800);
       });
     },
@@ -102,19 +60,44 @@ export default {
         this.model.username === this.validCredentials.username &&
         this.model.password === this.validCredentials.password
       ) {
-        this.$message.success('Login successfull');
+        this.$message.success("Login successfull");
       } else {
-        this.$message.error('Username or password is invalid');
+        this.$message.error("Username or password is invalid");
       }
     },
     goSignUp() {
-      this.$router.push('/signup');
+      this.$router.push("/signup");
     },
-  },
+    goSignIn() {
+      if (this.username == "" || this.password == "") {
+        alert("아이디 또는 비밀번호를 입력하세요.");
+        return;
+      }
+
+      axios
+        .post("http://localhost:8080/member/signIn", {
+          userId: this.model.username,
+          pw: this.model.password
+        })
+        .then(res => {
+          if (res.data.code == "B003") {
+            alert(res.data.message);
+            this.$router.push("/checkEmail");
+          } else if (res.data.code == "B001") {
+            alert(res.data.message);
+            this.$router.push("/login");
+          } else {
+            alert(res.data.message);
+            console.log(1, res.data.data);
+            this.SET_USERINFO(res.data.data);
+            this.$router.push("/Main");
+          }
+        });
+    }
+  }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .login {
   flex: 0.5;
@@ -172,7 +155,7 @@ $teal: rgb(0, 124, 137);
   padding-bottom: 30px;
 }
 h2 {
-  font-family: 'Open Sans';
+  font-family: "Open Sans";
   letter-spacing: 1px;
   font-family: Roboto, sans-serif;
   padding-bottom: 20px;

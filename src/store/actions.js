@@ -1,24 +1,31 @@
 import * as api from '../api';
-import axios from 'axios';
+// import axios from 'axios';
 
 // import moment from 'moment';
 
 const actions = {
-  async SIGNUP(data) {
-    axios.post('http://localhost:8080/member/signUp', {
-      params: {
-        signUpForm: data,
-      },
-    });
+  // async SIGNUP(data) {
+  //   axios.post('http://localhost:8080/member/signUp', {
+  //     params: {
+  //       signUpForm: data,
+  //     },
+  //   });
 
-    // return api.login.create(data);
-    //.then((data) => commit('SET__ID', routineId));
-  },
+  // return api.login.create(data);
+  //.then((data) => commit('SET__ID', routineId));
+  // },
+
   async GET_KAKAO_LOGIN() {
     api.login.kakaoLogin();
   },
   async GET_NAVER_LOGIN() {
     api.login.naverLogin();
+  },
+
+  async GET_MY_TODO_INFO_ALL({ commit }) {
+    api.todo.get().then((data) => {
+      commit('SET_TODO_INFO_ALL', data);
+    });
   },
 
   ////

@@ -1,17 +1,5 @@
-import loginAPI from './loginAPI';
 import axios from 'axios';
 import router from '../router';
-
-export default {
-  async login(uid, password) {
-    try {
-      const loginResponse = await loginAPI.login(uid, password);
-      return loginResponse;
-    } catch (err) {
-      console.error(err);
-    }
-  },
-};
 
 ////
 const DOMAIN = 'http://localhost:8080';
@@ -41,24 +29,24 @@ const request = (method, url, data) => {
     });
 };
 
-export const exercise = {
-  get() {
-    return request('get', `/exercise/findList`);
-  },
-  create(data) {
-    return request('post', '/exercise/save', data);
-  },
-  update(data) {
-    return request('post', `/exercise/update`, data);
-  },
-  delete(id) {
-    return request('post', `/exercise/remove/${id}`);
-  },
+// export const exercise = {
+//   get() {
+//     return request('get', `/exercise/findList`);
+//   },
+//   create(data) {
+//     return request('post', '/exercise/save', data);
+//   },
+//   update(data) {
+//     return request('post', `/exercise/update`, data);
+//   },
+//   delete(id) {
+//     return request('post', `/exercise/remove/${id}`);
+//   },
 
-  getCategories() {
-    return request('get', '/categories');
-  },
-};
+//   getCategories() {
+//     return request('get', '/categories');
+//   },
+// };
 
 export const login = {
   create(data) {
@@ -70,5 +58,11 @@ export const login = {
   },
   naverLogin() {
     window.location.href = 'http://localhost:8080/oauth2/authorization/naver';
+  },
+};
+
+export const todo = {
+  get(data) {
+    return request('get', `/todo/getTodoListAll`, data);
   },
 };
