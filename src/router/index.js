@@ -34,7 +34,6 @@ const routes = [
     name: 'CheckEmail',
     component: () => import('../components/login/CheckEmail.vue'),
   },
-
   {
     path: '/oauth-callback',
     name: 'OauthCallBack',

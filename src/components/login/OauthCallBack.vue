@@ -3,19 +3,18 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapMutations } from 'vuex';
 export default {
   created() {
     const token = this.$route.query.token;
     this.SET_TOKEN(token);
 
-    this.$router.push({ name: "Main" });
+    this.$router.push({ name: 'Main' });
   },
   methods: {
-    ...mapMutations(["SET_TOKEN"])
-  }
+    ...mapMutations(['SET_TOKEN']),
+  },
 };
 </script>
 
-<style>
-</style>
+<style></style>
