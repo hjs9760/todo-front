@@ -32,7 +32,7 @@ export default {
         .then(res => {
           if (res.data.code == 200) {
             alert(res.data.message);
-            this.$router.push("/Main");
+            this.$router.push({ name: "Login" });
           } else {
             alert(res.data.message);
             return;
