@@ -25,9 +25,11 @@ export default {
         return;
       }
       axios
-        .post("http://localhost:8080/member/checkEmail", {
-          emailCheckToken: this.emailCheckToken,
-          userId: this.userId
+        .get("http://localhost:8080/mail/checkEmail", {
+          params: {
+            emailCheckToken: this.emailCheckToken,
+            userId: this.userId
+          }
         })
         .then(res => {
           if (res.data.code == 200) {
