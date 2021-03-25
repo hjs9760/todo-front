@@ -12,8 +12,8 @@ const mutations = {
   SET_USERINFO(state, userInfo) {
     state.userInfo = userInfo;
   },
-  SET_TODO_INFO_ALL(state, todoList) {
-    state.todoListAll = todoList;
+  SET_TODO_INFO_ALL(state, categoryInfo) {
+    state.categoryInfo = categoryInfo;
   },
 
   // ADD_MY_EXERCISE_LIST(state, exerciseList) {

@@ -1,48 +1,68 @@
 <template>
-  <todo>
-    <template v-slot:header>
-      <my-header :buttons="headerButtons" />
-    </template>
-    <template v-slot:left>
-      <my-left :category="category"></my-left>
-    </template>
-  </todo>
+  <v-card class="mx-auto" width="300">
+    <v-list>
+      <v-list-item>
+        <v-list-item-icon>
+          <v-icon>mdi-home</v-icon>
+        </v-list-item-icon>
+
+        <v-list-item-title>Home</v-list-item-title>
+      </v-list-item>
+
+      <v-list-group :value="true" prepend-icon="mdi-account-circle">
+        <template v-slot:activator>
+          <v-list-item-title>Users</v-list-item-title>
+        </template>
+
+        <v-list-group :value="true" no-action sub-group>
+          <template v-slot:activator>
+            <v-list-item-content>
+              <v-list-item-title>Admin</v-list-item-title>
+            </v-list-item-content>
+          </template>
+
+          <v-list-item v-for="([title, icon], i) in admins" :key="i" link>
+            <v-list-item-title v-text="title"></v-list-item-title>
+
+            <v-list-item-icon>
+              <v-icon v-text="icon"></v-icon>
+            </v-list-item-icon>
+          </v-list-item>
+        </v-list-group>
+
+        <v-list-group no-action sub-group>
+          <template v-slot:activator>
+            <v-list-item-content>
+              <v-list-item-title>Actions</v-list-item-title>
+            </v-list-item-content>
+          </template>
+
+          <v-list-item v-for="([title, icon], i) in cruds" :key="i" link>
+            <v-list-item-title v-text="title"></v-list-item-title>
+
+            <v-list-item-icon>
+              <v-icon v-text="icon"></v-icon>
+            </v-list-item-icon>
+          </v-list-item>
+        </v-list-group>
+      </v-list-group>
+    </v-list>
+  </v-card>
 </template>
 
 <script>
-import MyHeader from '@/components/common/MyHeader.vue';
-import MyLeft from '@/components/common/MyLeft.vue';
-import Todo from '@/components/common/Todo.vue';
-import { mapState, mapActions } from 'vuex';
-
 export default {
-  components: { MyHeader, Todo, MyLeft },
-  data() {
-    return {
-      headerButtons: [
-        {
-          iconType: 'logout',
-          callback: this.logout,
-        },
-      ],
-    };
-  },
-  methods: {
-    ...mapActions(['GET_MY_TODO_INFO_ALL']),
-
-    logout() {
-      localStorage.removeItem('token');
-      alert('로그아웃 하였습니다.');
-      this.$router.push({ name: 'Login' });
-    },
-  },
-  computed: {
-    ...mapState(['todoInfo']),
-  },
-  created() {
-    this.GET_MY_TODO_INFO_ALL();
-  },
+  data: () => ({
+    admins: [
+      ['Management', 'mdi-account-multiple-outline'],
+      ['Settings', 'mdi-cog-outline'],
+    ],
+    cruds: [
+      ['Create', 'mdi-plus-outline'],
+      ['Read', 'mdi-file-outline'],
+      ['Update', 'mdi-update'],
+      ['Delete', 'mdi-delete'],
+    ],
+  }),
 };
 </script>
-
-<style></style>

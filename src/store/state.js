@@ -4,7 +4,7 @@ const state = {
   userId: '',
   userInfo: {},
   token: '',
-  todoListAll: {},
+  categoryInfo: {},
   startDate: `${moment()
     .subtract(7, 'd')
     .format('YYYY-MM-DD')}`,

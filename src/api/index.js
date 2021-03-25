@@ -63,6 +63,6 @@ export const login = {
 
 export const todo = {
   get(data) {
-    return request('get', `/todo/getTodoListAll`, data);
+    return request('get', `/category/find`, data);
   },
 };

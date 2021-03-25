@@ -4,7 +4,7 @@ import router from './router';
 import store from './store';
 import ElementUI from 'element-ui';
 import VueMaterial from './plugins/VueMaterial';
-// import vuetify from './plugins/vuetify';
+import vuetify from './plugins/vuetify';
 // import moment from 'vue-moment';
 // import Datetime from 'vue-datetime';
 
@@ -15,7 +15,7 @@ new Vue({
   router,
   store,
   render: (h) => h(App),
-  // vuetify,
+  vuetify,
   VueMaterial,
   // moment,
   // Datetime,
