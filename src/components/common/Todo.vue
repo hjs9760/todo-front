@@ -1,13 +1,16 @@
 <template>
   <div>
     <header>
-      <slot name="header">
-        <!-- <my-header :buttons="headerButtons" /> -->
-      </slot>
+      <slot name="header"> </slot>
     </header>
-    <section>
-      <slot name="left"></slot>
-    </section>
+    <div class="wrap">
+      <section>
+        <slot name="left"></slot>
+      </section>
+      <section>
+        <slot name="content"></slot>
+      </section>
+    </div>
   </div>
 </template>
 
@@ -15,5 +18,8 @@
 export default {};
 </script>
 
-<style>
+<style scoped>
+.wrap {
+  display: flex;
+}
 </style>

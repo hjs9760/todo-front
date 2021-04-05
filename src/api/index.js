@@ -1,7 +1,6 @@
 import axios from 'axios';
 import router from '../router';
 
-////
 const DOMAIN = 'http://localhost:8080';
 const UNAUTHORIZED = 401;
 
@@ -29,25 +28,6 @@ const request = (method, url, data) => {
     });
 };
 
-// export const exercise = {
-//   get() {
-//     return request('get', `/exercise/findList`);
-//   },
-//   create(data) {
-//     return request('post', '/exercise/save', data);
-//   },
-//   update(data) {
-//     return request('post', `/exercise/update`, data);
-//   },
-//   delete(id) {
-//     return request('post', `/exercise/remove/${id}`);
-//   },
-
-//   getCategories() {
-//     return request('get', '/categories');
-//   },
-// };
-
 export const login = {
   create(data) {
     return request('post', `/member/signUp`, data);
@@ -61,8 +41,20 @@ export const login = {
   },
 };
 
+export const category = {
+  get() {
+    return request('get', `/category/find`);
+  },
+};
+
 export const todo = {
-  get(data) {
-    return request('get', `/category/find`, data);
+  get(sectionId) {
+    return request('get', `/todo/find/${sectionId}`);
+  },
+  getByStatus(status) {
+    return request('get', `/todo/find/${status}`);
+  },
+  getAll(todoFindForm) {
+    return request('post', `/todo/findAll`, todoFindForm);
   },
 };

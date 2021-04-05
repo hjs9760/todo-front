@@ -1,6 +1,6 @@
 <template>
   <span class="my-button" @click="callback">
-    <md-icon>{{iconType}}</md-icon>
+    <md-icon>{{ iconType }}</md-icon>
   </span>
 </template>
 
@@ -9,14 +9,14 @@ export default {
   props: {
     iconType: {
       type: String,
-      required: true
+      required: true,
     },
     callback: {
       type: Function,
       required: false,
-      default: function() {}
-    }
-  }
+      default: function() {},
+    },
+  },
 };
 </script>
 

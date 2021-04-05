@@ -1,4 +1,5 @@
 import { setTokenInHeader } from '../api';
+import moment from 'moment';
 
 const mutations = {
   SET_TOKEN(state, token) {
@@ -12,41 +13,21 @@ const mutations = {
   SET_USERINFO(state, userInfo) {
     state.userInfo = userInfo;
   },
-  SET_TODO_INFO_ALL(state, categoryInfo) {
+  SET_CATEGORY_INFO_ALL(state, categoryInfo) {
     state.categoryInfo = categoryInfo;
   },
-
-  // ADD_MY_EXERCISE_LIST(state, exerciseList) {
-  //   for (var exercise of exerciseList) {
-  //     state.exerciseList.push(exercise);
-  //   }
-  // },
-
-  // SET_MY_ROUTINE_LIST(state, routineList) {
-  //   state.routineList = routineList;
-  // },
-
-  // SET_MY_INFO(state, myInfo) {
-  //   state.myInfo = myInfo;
-  // },
-
-  // SET_CATEGORIES(state, data) {
-  //   state.categoryList = data;
-  // },
-
-  // SET_MY_HISTORY_LIST(state, historyList) {
-  //   state.historyList = historyList;
-  // },
-
-  // SET_MY_START_DATE(state, date) {
-  //   state.startDate = date;
-  // },
-  // SET_MY_END_DATE(state, date) {
-  //   state.endDate = date;
-  // },
-  // SET_ROUTINE_ID(state, routineId) {
-  //   state.routineId = routineId;
-  // },
+  SET_TODO_INFO(state, todoInfo) {
+    state.todoInfo = todoInfo;
+  },
+  SET_TYPE(state, type) {
+    state.type = type;
+  },
+  SET_START_DATE(state, startDate) {
+    state.sDate = `${moment(startDate).format('YYYY-MM-DD 00:00:00')}`;
+  },
+  SET_END_DATE(state, endDate) {
+    state.eDate = `${moment(endDate).format('YYYY-MM-DD 00:00:00')}`;
+  },
 };
 
 export default mutations;

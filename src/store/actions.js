@@ -1,20 +1,6 @@
 import * as api from '../api';
-// import axios from 'axios';
-
-// import moment from 'moment';
 
 const actions = {
-  // async SIGNUP(data) {
-  //   axios.post('http://localhost:8080/member/signUp', {
-  //     params: {
-  //       signUpForm: data,
-  //     },
-  //   });
-
-  // return api.login.create(data);
-  //.then((data) => commit('SET__ID', routineId));
-  // },
-
   async GET_KAKAO_LOGIN() {
     api.login.kakaoLogin();
   },
@@ -22,55 +8,31 @@ const actions = {
     api.login.naverLogin();
   },
 
-  async GET_MY_TODO_INFO_ALL({ commit }) {
-    api.todo.get().then((data) => {
-      commit('SET_TODO_INFO_ALL', data);
+  async GET_MY_CATEGORY_INFO_ALL({ commit }) {
+    api.category.get().then((data) => {
+      commit('SET_CATEGORY_INFO_ALL', data.data);
     });
   },
 
-  ////
-  // async CREATE_ROUTINE({ dispatch, commit }, data) {
-  //   return api.routine
-  //     .create(data)
-  //     .then((routineId) =>
-  //       dispatch('GET_MY_ROUTINE_LIST', commit('SET_ROUTINE_ID', routineId))
-  //     );
-  // },
-  // async UPDATE_ROUTINE({ dispatch }, data) {
-  //   return api.routine.update(data).then(() => dispatch('GET_MY_ROUTINE_LIST'));
-  // },
-  // async DELETE_ROUTINE({ dispatch }, id) {
-  //   return api.routine
-  //     .delete(id)
-  //     .then((value) =>
-  //       dispatch(
-  //         'GET_MY_ROUTINE_LIST',
-  //         value == 0
-  //           ? alert('정상적으로 삭제되었습니다.')
-  //           : alert('삭제에 실패하였습니다.')
-  //       )
-  //     );
-  // },
-  // async GET_MY_INFO({ commit }) {
-  //   return api.member.get().then((data) => {
-  //     commit('SET_MY_INFO', data);
-  //   });
-  // },
-  // async GET_MY_HISTORY_LIST({ commit }, date) {
-  //   api.history.get(date).then((data) => {
-  //     commit('SET_MY_HISTORY_LIST', data);
-  //   });
-  // },
-  // async CREATE_MY_HISTORY_LIST({ dispatch }, data) {
-  //   api.history.create(data).then(() => {
-  //     dispatch('GET_MY_HISTORY_LIST', {
-  //       startDate: `${moment()
-  //         .subtract(7, 'd')
-  //         .format('YYYY-MM-DD 00:00:00')}`,
-  //       endDate: `${moment().format('YYYY-MM-DD 00:00:00')}`,
-  //     });
-  //   });
-  // },
+  async GET_MY_TODO_INFO_BY_SECTION({ commit }, sectionId) {
+    api.todo.get(sectionId).then((data) => {
+      commit('SET_TODO_INFO', data.data);
+    });
+  },
+
+  async GET_MY_TODO_INFO_BY_STATUS({ commit }, status) {
+    api.todo.getByStatus(status).then((data) => {
+      commit('SET_TODO_INFO_ALL', data.data);
+    });
+  },
+
+  async GET_MY_TODO_INFO_ALL({ commit }, todoFindForm) {
+    api.todo.getAll(todoFindForm).then((data) => {
+      commit('SET_TODO_INFO', data.data);
+      commit('SET_START_DATE', todoFindForm.startDate);
+      commit('SET_END_DATE', todoFindForm.endDate);
+    });
+  },
 };
 
 export default actions;
