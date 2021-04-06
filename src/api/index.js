@@ -57,4 +57,7 @@ export const todo = {
   getAll(todoFindForm) {
     return request('post', `/todo/findAll`, todoFindForm);
   },
+  update(todoUpdateForm) {
+    return request('post', `/todo/update`, todoUpdateForm);
+  },
 };

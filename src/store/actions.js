@@ -33,6 +33,15 @@ const actions = {
       commit('SET_END_DATE', todoFindForm.endDate);
     });
   },
+
+  async UPDATE_TODO_INFO({ dispatch }, todoUpdateForm) {
+    await api.todo.update(todoUpdateForm).then((data) => {
+      alert(data.message);
+      if (data.code == '200') {
+        dispatch('GET_MY_TODO_INFO_BY_SECTION', data.data);
+      }
+    });
+  },
 };
 
 export default actions;
