@@ -8,7 +8,7 @@
               내용
             </th>
             <th style="text-align:center; width:300px;">
-              수정 값
+              값
             </th>
             <th style="text-align:center; width:200px;">
               설명

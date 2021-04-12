@@ -19,8 +19,8 @@ const mutations = {
   SET_TODO_INFO(state, todoInfo) {
     state.todoInfo = todoInfo;
   },
-  SET_TYPE(state, type) {
-    state.type = type;
+  SET_TYPE(state, showType) {
+    state.showType = showType;
   },
   SET_START_DATE(state, startDate) {
     state.sDate = `${moment(startDate).format('YYYY-MM-DD 00:00:00')}`;

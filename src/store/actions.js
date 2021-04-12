@@ -35,10 +35,28 @@ const actions = {
   },
 
   async UPDATE_TODO_INFO({ dispatch }, todoUpdateForm) {
-    await api.todo.update(todoUpdateForm).then((data) => {
+    api.todo.update(todoUpdateForm).then((data) => {
       alert(data.message);
       if (data.code == '200') {
         dispatch('GET_MY_TODO_INFO_BY_SECTION', data.data);
+      }
+    });
+  },
+
+  async CREATE_CATEGORY({ dispatch }, categorySaveForm) {
+    api.category.create(categorySaveForm).then((data) => {
+      alert(data.message);
+      if (data.code == '200') {
+        dispatch('GET_MY_CATEGORY_INFO_ALL', data.data);
+      }
+    });
+  },
+
+  async CREATE_TODO({ dispatch }, todoSaveForm) {
+    api.todo.create(todoSaveForm).then((data) => {
+      alert(data.message);
+      if (data.code == '200') {
+        dispatch('GET_MY_TODO_INFO_BY_SECTION', todoSaveForm.sectionId);
       }
     });
   },

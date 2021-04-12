@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <img src="../../../public/image/todoLogo.png" alt="" />
+    <img src="../../../public/image/todoLogo.png" alt />
     <span class="button-container">
       <my-button
         v-for="(button, index) in buttons"
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import MyButton from '@/components/common/MyButton.vue';
+import MyButton from "@/components/common/MyButton.vue";
 
 export default {
   components: { MyButton },
@@ -21,9 +21,9 @@ export default {
     buttons: {
       type: Array,
       required: false,
-      default: () => [],
-    },
-  },
+      default: () => []
+    }
+  }
 };
 </script>
 

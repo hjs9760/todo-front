@@ -45,6 +45,9 @@ export const category = {
   get() {
     return request('get', `/category/find`);
   },
+  create(categorySaveForm) {
+    return request('post', `/category/save`, categorySaveForm);
+  },
 };
 
 export const todo = {
@@ -59,5 +62,8 @@ export const todo = {
   },
   update(todoUpdateForm) {
     return request('post', `/todo/update`, todoUpdateForm);
+  },
+  create(todoSaveForm) {
+    return request('post', `/todo/save`, todoSaveForm);
   },
 };

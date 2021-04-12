@@ -13,14 +13,12 @@
     <v-divider></v-divider>
 
     <!-- 할일 목록 -->
-    <div v-if="showType == 2">
+    <div v-if="showType == 2" class="myTodo">
       <div v-for="(todo, index) in todoInfo" :key="index">
         <span>
           <v-card elevation="2" outlined shaped tile>
             제목: {{ todo.name }} (상태: {{ todo.statusName }})
-            <v-card-subtitle
-              >기간 : {{ todo.startDate }} ~ {{ todo.endDate }}</v-card-subtitle
-            >
+            <v-card-subtitle>기간 : {{ todo.startDate }} ~ {{ todo.endDate }}</v-card-subtitle>
             <v-card-text>내용 : {{ todo.content }}</v-card-text>
 
             <v-btn @click="openDialog()">수정</v-btn>
@@ -28,17 +26,15 @@
         </span>
 
         <!-- 할일 수정 모달창 -->
-        <v-dialog v-model="dialog" persistent max-width="900px">
+        <v-dialog v-model="todoUpdateDialog" persistent max-width="900px">
           <v-card>
             <v-card-title>
               <template>
-                <v-icon style="margin-right:10px;" large color="#41B883"
-                  >update</v-icon
-                >
+                <v-icon style="margin-right:10px;" large color="#41B883">update</v-icon>
                 <span class="headline" large>{{ todo.name }}</span>
               </template>
               <v-spacer></v-spacer>
-              <v-btn icon @click="closeDialog()">
+              <v-btn icon @click="closeTodoUpdateDialog()">
                 <!-- closeDialog 클릭 이벤트 -->
                 <v-icon>clear</v-icon>
               </v-btn>
@@ -53,7 +49,7 @@
                 >
                   <todo-update-modal
                     :todo="todo"
-                    v-on:closeDialog="closeDialog"
+                    v-on:closeTodoUpdateDialog="closeTodoUpdateDialog"
                   ></todo-update-modal>
                   <!-- 업로드 컴포넌트 -->
                 </v-col>
@@ -62,6 +58,42 @@
           </v-card>
         </v-dialog>
       </div>
+      <v-spacer></v-spacer>
+      <v-spacer></v-spacer>
+      <v-spacer></v-spacer>
+      <v-btn text color="grey" @click="openTodoCreateDialog()">+ 할일 추가</v-btn>
+      <!-- 할일 추가 모달창 -->
+      <v-dialog v-model="todoCreateDialog" persistent max-width="900px">
+        <v-card>
+          <v-card-title>
+            <template>
+              <v-icon style="margin-right:10px;" large color="#41B883">update</v-icon>
+              <span class="headline" large>할일 추가</span>
+            </template>
+            <v-spacer></v-spacer>
+            <v-btn icon @click="closeTodoCreateDialog()">
+              <v-icon>clear</v-icon>
+            </v-btn>
+          </v-card-title>
+          <v-card-text>
+            <v-row>
+              <v-col
+                cols="12"
+                sm="12"
+                md="12"
+                style="position: relative; border:1px solid #41B883; border-style:dashed; "
+              >
+                <todo-create-modal
+                  :sectionId="sectionId"
+                  v-on:closeTodoCreateDialog="closeTodoCreateDialog"
+                ></todo-create-modal>
+                <!-- 업로드 컴포넌트 -->
+              </v-col>
+            </v-row>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
+      <!-- end 할일 추가 모달창  -->
     </div>
 
     <!-- 전체 일정 -->
@@ -110,11 +142,7 @@
                     v-on="on"
                   ></v-text-field>
                 </template>
-                <v-date-picker
-                  v-model="startDate"
-                  no-title
-                  @input="menu1 = false"
-                ></v-date-picker>
+                <v-date-picker v-model="startDate" no-title @input="menu1 = false"></v-date-picker>
               </v-menu>
             </v-col>
 
@@ -139,11 +167,7 @@
                     v-on="on"
                   ></v-text-field>
                 </template>
-                <v-date-picker
-                  v-model="endDate"
-                  no-title
-                  @input="menu2 = false"
-                ></v-date-picker>
+                <v-date-picker v-model="endDate" no-title @input="menu2 = false"></v-date-picker>
               </v-menu>
             </v-col>
           </v-row>
@@ -174,45 +198,50 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
-import moment from 'moment';
-import TodoUpdateModal from '@/components/todo/TodoUpdateModal.vue';
+import { mapMutations } from "vuex";
+import moment from "moment";
+import TodoUpdateModal from "@/components/todo/TodoUpdateModal.vue";
+import TodoCreateModal from "@/components/todo/TodoCreateModal.vue";
 
 export default {
-  components: { TodoUpdateModal },
+  components: { TodoCreateModal, TodoUpdateModal },
   props: {
     todoInfo: {},
     schedule: {
-      required: false,
+      required: false
     },
     showType: {
-      required: true,
+      required: true
     },
     sDate: {},
     eDate: {},
+    sectionId: {
+      required: true
+    }
   },
   data() {
     return {
       // 전체일정 데이터
-      type: 'month',
-      types: ['month', 'week', 'day'],
+      type: "month",
+      types: ["month", "week", "day"],
 
       weekday: [0, 1, 2, 3, 4, 5, 6],
       weekdays: [
-        { text: '일 - 월', value: [0, 1, 2, 3, 4, 5, 6] },
-        { text: '월 - 일', value: [1, 2, 3, 4, 5, 6, 0] },
+        { text: "일 - 월", value: [0, 1, 2, 3, 4, 5, 6] },
+        { text: "월 - 일", value: [1, 2, 3, 4, 5, 6, 0] }
       ],
-      value: '',
+      value: "",
       events: [],
 
       // 검색 관련 데이터
-      startDate: `${moment(this.sDate).format('YYYY-MM-DD')}`,
-      endDate: `${moment(this.eDate).format('YYYY-MM-DD')}`,
+      startDate: `${moment(this.sDate).format("YYYY-MM-DD")}`,
+      endDate: `${moment(this.eDate).format("YYYY-MM-DD")}`,
       menu1: false,
       menu2: false,
 
       // 섹션 > 할일 데이터
-      dialog: '',
+      todoCreateDialog: "",
+      todoUpdateDialog: ""
     };
   },
 
@@ -221,26 +250,26 @@ export default {
   watch: {
     startDate: function() {
       this.SET_START_DATE(this.startDate);
-      this.$emit('searchTodo');
+      this.$emit("searchTodo");
     },
     endDate: function() {
       this.SET_END_DATE(this.endDate);
-      this.$emit('searchTodo');
+      this.$emit("searchTodo");
     },
     todoInfo: function() {
       this.getEvents();
-    },
+    }
   },
   methods: {
-    ...mapMutations(['SET_START_DATE', 'SET_END_DATE']),
+    ...mapMutations(["SET_START_DATE", "SET_END_DATE"]),
     // 검색 관련 메소드
 
     parseStartDate(date) {
-      let val = `${moment(date).format('YYYY-MM-DD')}`;
+      let val = `${moment(date).format("YYYY-MM-DD")}`;
       return val;
     },
     parseEndDate(date) {
-      let val = `${moment(date).format('YYYY-MM-DD')}`;
+      let val = `${moment(date).format("YYYY-MM-DD")}`;
       return val;
     },
 
@@ -252,10 +281,10 @@ export default {
         let todo = this.todoInfo[i];
 
         const min = new Date(
-          `${moment(todo.startDate).format('YYYY-MM-DD HH:mm:ss')}`
+          `${moment(todo.startDate).format("YYYY-MM-DD HH:mm:ss")}`
         );
         const max = new Date(
-          `${moment(todo.endDate).format('YYYY-MM-DD HH:mm:ss')}`
+          `${moment(todo.endDate).format("YYYY-MM-DD HH:mm:ss")}`
         );
 
         const first = new Date(min.getTime());
@@ -265,7 +294,7 @@ export default {
           name: todo.name,
           start: first,
           end: second,
-          color: todo.color,
+          color: todo.color
         });
       }
 
@@ -274,21 +303,26 @@ export default {
     // getEventColor(event) {
 
     // 섹션 > 할일 메소드
-    openDialog() {
-      //Dialog 열리는 동작
-      this.dialog = true;
+    openTodoCreateDialog() {
+      this.todoCreateDialog = true;
     },
-    closeDialog() {
-      //Dialog 닫히는 동작
-      this.dialog = false;
+    closeTodoCreateDialog() {
+      this.todoCreateDialog = false;
     },
+    openTodoUpdateDialog() {
+      this.todoUpdateDialog = true;
+    },
+    closeTodoUpdateDialog() {
+      this.todoUpdateDialog = false;
+    }
   },
-  created() {},
+  created() {}
 };
 </script>
 
 <style scoped>
-.left {
-  flex: 2;
+.myTodo {
+  flex-wrap: wrap;
+  display: flex;
 }
 </style>
