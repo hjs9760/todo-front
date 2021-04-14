@@ -15,48 +15,7 @@
     <!-- 할일 목록 -->
     <div v-if="showType == 2" class="myTodo">
       <div v-for="(todo, index) in todoInfo" :key="index">
-        <span>
-          <v-card elevation="2" outlined shaped tile>
-            제목: {{ todo.name }} (상태: {{ todo.statusName }})
-            <v-card-subtitle>기간 : {{ todo.startDate }} ~ {{ todo.endDate }}</v-card-subtitle>
-            <v-card-text>내용 : {{ todo.content }}</v-card-text>
-
-            <v-btn @click="openDialog()">수정</v-btn>
-          </v-card>
-        </span>
-
-        <!-- 할일 수정 모달창 -->
-        <v-dialog v-model="todoUpdateDialog" persistent max-width="900px">
-          <v-card>
-            <v-card-title>
-              <template>
-                <v-icon style="margin-right:10px;" large color="#41B883">update</v-icon>
-                <span class="headline" large>{{ todo.name }}</span>
-              </template>
-              <v-spacer></v-spacer>
-              <v-btn icon @click="closeTodoUpdateDialog()">
-                <!-- closeDialog 클릭 이벤트 -->
-                <v-icon>clear</v-icon>
-              </v-btn>
-            </v-card-title>
-            <v-card-text>
-              <v-row>
-                <v-col
-                  cols="12"
-                  sm="12"
-                  md="12"
-                  style="position: relative; border:1px solid #41B883; border-style:dashed; "
-                >
-                  <todo-update-modal
-                    :todo="todo"
-                    v-on:closeTodoUpdateDialog="closeTodoUpdateDialog"
-                  ></todo-update-modal>
-                  <!-- 업로드 컴포넌트 -->
-                </v-col>
-              </v-row>
-            </v-card-text>
-          </v-card>
-        </v-dialog>
+        <todo-item :todo="todo"></todo-item>
       </div>
       <v-spacer></v-spacer>
       <v-spacer></v-spacer>
@@ -67,7 +26,7 @@
         <v-card>
           <v-card-title>
             <template>
-              <v-icon style="margin-right:10px;" large color="#41B883">update</v-icon>
+              <v-icon style="margin-right:10px;" large color="#41B883">create</v-icon>
               <span class="headline" large>할일 추가</span>
             </template>
             <v-spacer></v-spacer>
@@ -200,11 +159,11 @@
 <script>
 import { mapMutations } from "vuex";
 import moment from "moment";
-import TodoUpdateModal from "@/components/todo/TodoUpdateModal.vue";
+import TodoItem from "@/components/todo/TodoItem.vue";
 import TodoCreateModal from "@/components/todo/TodoCreateModal.vue";
 
 export default {
-  components: { TodoCreateModal, TodoUpdateModal },
+  components: { TodoCreateModal, TodoItem },
   props: {
     todoInfo: {},
     schedule: {
@@ -240,8 +199,7 @@ export default {
       menu2: false,
 
       // 섹션 > 할일 데이터
-      todoCreateDialog: "",
-      todoUpdateDialog: ""
+      todoCreateDialog: ""
     };
   },
 
@@ -300,7 +258,6 @@ export default {
 
       this.events = events;
     },
-    // getEventColor(event) {
 
     // 섹션 > 할일 메소드
     openTodoCreateDialog() {
@@ -308,12 +265,6 @@ export default {
     },
     closeTodoCreateDialog() {
       this.todoCreateDialog = false;
-    },
-    openTodoUpdateDialog() {
-      this.todoUpdateDialog = true;
-    },
-    closeTodoUpdateDialog() {
-      this.todoUpdateDialog = false;
     }
   },
   created() {}
@@ -324,5 +275,7 @@ export default {
 .myTodo {
   flex-wrap: wrap;
   display: flex;
+  justify-content: space-between;
+  /* align-content: stretch; */
 }
 </style>
