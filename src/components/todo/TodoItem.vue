@@ -1,11 +1,17 @@
 <template>
-  <div>
-    <v-card elevation="2" outlined shaped tile>
-      제목: {{ todo.name }} (상태: {{ todo.statusName }})
+  <div style="background-color:red;">
+    <v-card
+      class="todoItem"
+      @click="openModal()"
+      elevation="2"
+      outlined
+      shaped
+      tile
+      v-bind:style="{ 'background-color': todo.color  }"
+    >
+      제목: {{ todo.name }}
       <v-card-subtitle>기간 : {{ todo.startDate }} ~ {{ todo.endDate }}</v-card-subtitle>
       <v-card-text>내용 : {{ todo.content }}</v-card-text>
-
-      <v-btn @click="openModal()">수정</v-btn>
     </v-card>
     <!-- 할일 수정 모달창 -->
     <v-dialog v-model="show" persistent max-width="900px">
@@ -62,18 +68,9 @@ export default {
 </script>
 
 <style scoped>
-.exercise-item {
-  border: 1px solid black;
-
-  display: flex;
-  margin: 0 auto;
-
-  height: 50px;
-  justify-content: center;
-  align-items: center;
-}
-
-.exercise-item-button-container {
-  margin-left: auto;
+.todoItem {
+  width: 250px;
+  height: 200px;
+  /* background-color: #2196f3; */
 }
 </style>

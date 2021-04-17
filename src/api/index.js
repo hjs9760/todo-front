@@ -48,6 +48,12 @@ export const category = {
   create(categorySaveForm) {
     return request('post', `/category/save`, categorySaveForm);
   },
+  update(categoryUpdateForm) {
+    return request('post', `/category/update`, categoryUpdateForm);
+  },
+  delete(categoryId) {
+    return request('post', `/category/delete/${categoryId}`);
+  },
 };
 
 export const todo = {
@@ -65,5 +71,17 @@ export const todo = {
   },
   create(todoSaveForm) {
     return request('post', `/todo/save`, todoSaveForm);
+  },
+};
+
+export const section = {
+  create(sectionSaveForm) {
+    return request('post', `/section/save`, sectionSaveForm);
+  },
+  update(sectionUpdateForm) {
+    return request('post', `/section/update`, sectionUpdateForm);
+  },
+  delete(sectionId) {
+    return request('post', `/section/delete/${sectionId}`);
   },
 };

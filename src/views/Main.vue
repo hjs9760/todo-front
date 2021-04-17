@@ -39,8 +39,7 @@ export default {
           iconType: "logout",
           callback: this.logout
         }
-      ],
-      sectionId: ""
+      ]
     };
   },
   methods: {
@@ -58,7 +57,6 @@ export default {
 
     findTodo(sectionId, type) {
       this.GET_MY_TODO_INFO_BY_SECTION(sectionId);
-      this.sectionId = sectionId;
       this.SET_TYPE(type);
     },
     setType(type) {
@@ -76,7 +74,14 @@ export default {
     }
   },
   computed: {
-    ...mapState(["categoryInfo", "todoInfo", "sDate", "eDate", "showType"])
+    ...mapState([
+      "categoryInfo",
+      "todoInfo",
+      "sDate",
+      "eDate",
+      "showType",
+      "sectionId"
+    ])
   },
   created() {
     this.GET_MY_CATEGORY_INFO_ALL();

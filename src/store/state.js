@@ -11,6 +11,7 @@ const state = {
     .add(1, 'day')
     .format('YYYY-MM-DD 00:00:00')}`,
   showType: 1,
+  sectionId: '',
 };
 
 export default state;

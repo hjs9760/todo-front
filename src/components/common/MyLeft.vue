@@ -1,6 +1,6 @@
 <template>
   <div class="left">
-    <v-card class="mx-auto" width="300">
+    <v-card class="mx-auto" width="350">
       <v-list>
         <v-list-item>
           <v-list-item-title class="my-button" @click="setType(1)">전체 일정</v-list-item-title>
@@ -32,7 +32,6 @@
                   style="position: relative; border:1px solid #41B883; border-style:dashed; "
                 >
                   <category-create-modal v-on:closeCategoryDialog="closeCategoryDialog"></category-create-modal>
-                  <!-- 업로드 컴포넌트 -->
                 </v-col>
               </v-row>
             </v-card-text>
@@ -45,14 +44,21 @@
           <v-list-group>
             <template v-slot:activator>
               <v-icon v-bind:style="{ color: category.statusColor }">mdi-thumb-up</v-icon>
-              <v-list-item-title>{{ category.name }}</v-list-item-title>
+              <v-list-item-title>
+                <section-create-item :category="category"></section-create-item>
+              </v-list-item-title>
             </template>
 
             <div v-for="(section, index) in category.sectionInfo" :key="index">
-              <v-list-group sub-group prepend-icon>
+              <v-list-group sub-group>
                 <template v-slot:activator>
                   <v-list-item-content>
-                    <v-list-item-title @click="findTodo(section.sectionId)">{{ section.name }}</v-list-item-title>
+                    <v-list-item-title @click="findTodo(section.sectionId)">
+                      <section-update-item
+                        :sectionId="section.sectionId"
+                        :sectionName="section.name"
+                      ></section-update-item>
+                    </v-list-item-title>
                   </v-list-item-content>
                 </template>
               </v-list-group>
@@ -68,9 +74,11 @@
 <script>
 import { mapMutations, mapState } from "vuex";
 import CategoryCreateModal from "@/components/category/CategoryCreateModal.vue";
+import SectionCreateItem from "@/components/section/SectionCreateItem.vue";
+import SectionUpdateItem from "@/components/section/SectionUpdateItem.vue";
 
 export default {
-  components: { CategoryCreateModal },
+  components: { CategoryCreateModal, SectionCreateItem, SectionUpdateItem },
   props: {
     categoryInfo: {
       required: false,
@@ -78,7 +86,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["showType"])
+    ...mapState(["showType", "sectionId"])
   },
   data() {
     return {
@@ -86,10 +94,12 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["SET_TYPE"]),
+    ...mapMutations(["SET_TYPE", "SET_SECTIONID"]),
 
     findTodo(sectionId) {
+      this.SET_SECTIONID(sectionId);
       this.SET_TYPE(2);
+
       this.$emit("findTodo", sectionId, 2);
     },
     setType(type) {

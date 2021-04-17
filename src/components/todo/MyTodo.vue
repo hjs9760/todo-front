@@ -7,6 +7,10 @@
       <v-btn @click="findTodoByStatus('PROBLEM')" color="red">문제</v-btn>
       <v-btn @click="findTodoByStatus('HOLD')" color="grey">보류</v-btn>
     </div>
+    <v-divider></v-divider>
+    <div>
+      <v-btn text color="grey" @click="openTodoCreateDialog()">+ 할일 추가</v-btn>
+    </div>
 
     <v-divider></v-divider>
     <v-divider></v-divider>
@@ -14,13 +18,13 @@
 
     <!-- 할일 목록 -->
     <div v-if="showType == 2" class="myTodo">
-      <div v-for="(todo, index) in todoInfo" :key="index">
+      <div v-for="(todo, index) in todoInfo" :key="index" class="todoContent">
         <todo-item :todo="todo"></todo-item>
       </div>
       <v-spacer></v-spacer>
       <v-spacer></v-spacer>
       <v-spacer></v-spacer>
-      <v-btn text color="grey" @click="openTodoCreateDialog()">+ 할일 추가</v-btn>
+
       <!-- 할일 추가 모달창 -->
       <v-dialog v-model="todoCreateDialog" persistent max-width="900px">
         <v-card>
@@ -46,7 +50,6 @@
                   :sectionId="sectionId"
                   v-on:closeTodoCreateDialog="closeTodoCreateDialog"
                 ></todo-create-modal>
-                <!-- 업로드 컴포넌트 -->
               </v-col>
             </v-row>
           </v-card-text>
@@ -275,7 +278,13 @@ export default {
 .myTodo {
   flex-wrap: wrap;
   display: flex;
-  justify-content: space-between;
-  /* align-content: stretch; */
+  /* justify-content: space-between; */
+  padding: 20px;
+}
+
+.todoContent {
+  margin: 20px;
+  width: 250px;
+  height: 200px;
 }
 </style>

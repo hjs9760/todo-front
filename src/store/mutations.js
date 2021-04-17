@@ -28,6 +28,9 @@ const mutations = {
   SET_END_DATE(state, endDate) {
     state.eDate = `${moment(endDate).format('YYYY-MM-DD 00:00:00')}`;
   },
+  SET_SECTIONID(state, sectionId) {
+    state.sectionId = sectionId;
+  },
 };
 
 export default mutations;

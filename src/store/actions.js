@@ -60,6 +60,52 @@ const actions = {
       }
     });
   },
+
+  async CREATE_SECTION({ dispatch }, sectionSaveForm) {
+    api.section.create(sectionSaveForm).then((data) => {
+      alert(data.message);
+      if (data.code == '200') {
+        dispatch('GET_MY_CATEGORY_INFO_ALL');
+      }
+    });
+  },
+
+  async UPDATE_SECTION({ dispatch }, sectionUpdateForm) {
+    api.section.update(sectionUpdateForm).then((data) => {
+      alert(data.message);
+      if (data.code == '200') {
+        dispatch('GET_MY_CATEGORY_INFO_ALL');
+      }
+    });
+  },
+
+  async DELETE_SECTION({ dispatch }, sectionId) {
+    api.section.delete(sectionId).then((data) => {
+      alert(data.message);
+      if (data.code == '200') {
+        dispatch('GET_MY_CATEGORY_INFO_ALL');
+        dispatch('GET_MY_TODO_INFO_BY_SECTION', sectionId);
+      }
+    });
+  },
+
+  async UPDATE_CATEGORY({ dispatch }, categoryUpdateForm) {
+    api.category.update(categoryUpdateForm).then((data) => {
+      alert(data.message);
+      if (data.code == '200') {
+        dispatch('GET_MY_CATEGORY_INFO_ALL');
+      }
+    });
+  },
+
+  async DELETE_CATEGORY({ dispatch }, categoryId) {
+    api.category.delete(categoryId).then((data) => {
+      alert(data.message);
+      if (data.code == '200') {
+        dispatch('GET_MY_CATEGORY_INFO_ALL');
+      }
+    });
+  },
 };
 
 export default actions;
