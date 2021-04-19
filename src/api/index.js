@@ -61,7 +61,7 @@ export const todo = {
     return request('get', `/todo/find/${sectionId}`);
   },
   getByStatus(status) {
-    return request('get', `/todo/find/${status}`);
+    return request('get', `/todo/findByStatus/${status}`);
   },
   getAll(todoFindForm) {
     return request('post', `/todo/findAll`, todoFindForm);

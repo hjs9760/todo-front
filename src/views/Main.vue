@@ -48,16 +48,17 @@ export default {
       "GET_MY_TODO_INFO_ALL",
       "GET_MY_TODO_INFO_BY_SECTION"
     ]),
-    ...mapMutations(["SET_TYPE"]),
+    ...mapMutations(["SET_TYPE", "SET_SECTIONID"]),
     logout() {
       localStorage.removeItem("token");
       alert("로그아웃 하였습니다.");
       this.$router.push({ name: "Login" });
     },
 
-    findTodo(sectionId, type) {
+    findTodo(sectionId) {
       this.GET_MY_TODO_INFO_BY_SECTION(sectionId);
-      this.SET_TYPE(type);
+      this.SET_SECTIONID(sectionId);
+      this.SET_TYPE(2);
     },
     setType(type) {
       this.GET_MY_TODO_INFO_ALL({

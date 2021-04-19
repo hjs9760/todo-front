@@ -1,14 +1,15 @@
 <template>
-  <div>
+  <div style="width:1450px;">
     <div>
       <v-btn @click="findTodoByStatus('PLAN')" color="whitesmoke">계획</v-btn>
       <v-btn @click="findTodoByStatus('PROGRESS')" color="green">진행</v-btn>
       <v-btn @click="findTodoByStatus('COMPLETE')" color="blue">완료</v-btn>
       <v-btn @click="findTodoByStatus('PROBLEM')" color="red">문제</v-btn>
       <v-btn @click="findTodoByStatus('HOLD')" color="grey">보류</v-btn>
+      <v-btn @click="findTodoByStatus('ALL')">전체</v-btn>
     </div>
     <v-divider></v-divider>
-    <div>
+    <div v-if="showType == 2">
       <v-btn text color="grey" @click="openTodoCreateDialog()">+ 할일 추가</v-btn>
     </div>
 
@@ -160,7 +161,7 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapMutations, mapActions } from "vuex";
 import moment from "moment";
 import TodoItem from "@/components/todo/TodoItem.vue";
 import TodoCreateModal from "@/components/todo/TodoCreateModal.vue";
@@ -223,8 +224,8 @@ export default {
   },
   methods: {
     ...mapMutations(["SET_START_DATE", "SET_END_DATE"]),
+    ...mapActions(["GET_MY_TODO_INFO_BY_STATUS", "GET_MY_TODO_INFO_ALL"]),
     // 검색 관련 메소드
-
     parseStartDate(date) {
       let val = `${moment(date).format("YYYY-MM-DD")}`;
       return val;
@@ -268,9 +269,35 @@ export default {
     },
     closeTodoCreateDialog() {
       this.todoCreateDialog = false;
+    },
+
+    findTodoByStatus(status) {
+      if (this.showType == 1) {
+        if (status == "ALL") {
+          this.GET_MY_TODO_INFO_ALL({
+            startDate: `${moment(this.startDate).format(
+              "YYYY-MM-DD 00:00:00"
+            )}`,
+            endDate: `${moment(this.endDate).format("YYYY-MM-DD 23:59:59")}`
+          });
+        } else {
+          this.GET_MY_TODO_INFO_ALL({
+            status: status,
+            startDate: `${moment(this.startDate).format(
+              "YYYY-MM-DD 00:00:00"
+            )}`,
+            endDate: `${moment(this.endDate).format("YYYY-MM-DD 23:59:59")}`
+          });
+        }
+      } else {
+        if (status == "ALL") {
+          this.GET_MY_TODO_INFO_BY_STATUS(status);
+        } else {
+          this.GET_MY_TODO_INFO_BY_STATUS(status);
+        }
+      }
     }
-  },
-  created() {}
+  }
 };
 </script>
 

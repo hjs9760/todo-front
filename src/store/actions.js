@@ -22,7 +22,7 @@ const actions = {
 
   async GET_MY_TODO_INFO_BY_STATUS({ commit }, status) {
     api.todo.getByStatus(status).then((data) => {
-      commit('SET_TODO_INFO_ALL', data.data);
+      commit('SET_TODO_INFO', data.data);
     });
   },
 

@@ -97,10 +97,7 @@ export default {
     ...mapMutations(["SET_TYPE", "SET_SECTIONID"]),
 
     findTodo(sectionId) {
-      this.SET_SECTIONID(sectionId);
-      this.SET_TYPE(2);
-
-      this.$emit("findTodo", sectionId, 2);
+      this.$emit("findTodo", sectionId);
     },
     setType(type) {
       this.SET_TYPE(type);
