@@ -39,6 +39,18 @@ const routes = [
     name: 'OauthCallBack',
     component: () => import('../components/login/OauthCallBack.vue'),
   },
+  {
+    path: '/notice',
+    name: 'Notice',
+    component: () => import('../components/notice/Main.vue'),
+    beforeEnter: requireAuth(),
+  },
+  {
+    path: '/setting',
+    name: 'Setting',
+    component: () => import('../components/share/Main.vue'),
+    beforeEnter: requireAuth(),
+  },
 ];
 
 const router = new VueRouter({

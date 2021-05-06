@@ -12,6 +12,9 @@ const state = {
     .format('YYYY-MM-DD 00:00:00')}`,
   showType: 1,
   sectionId: '',
+  leftType: 1,
+  noticeInfo: {},
+  shareCategoryInfo: {},
 };
 
 export default state;

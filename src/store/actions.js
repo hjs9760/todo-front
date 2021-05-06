@@ -106,6 +106,50 @@ const actions = {
       }
     });
   },
+
+  async GET_MY_NOTICE_INFO({ commit }) {
+    api.notice.get().then((data) => {
+      commit('SET_NOTICE_INFO', data.data);
+    });
+  },
+
+  async DELETE_NOTICE({ dispatch }, noticeId) {
+    api.notice.delete(noticeId).then((data) => {
+      alert(data.message);
+      if (data.code == '200') {
+        dispatch('GET_MY_NOTICE_INFO');
+      }
+    });
+  },
+
+  async UPDATE_NOTICE({ dispatch }, noticeUpdateForm) {
+    api.notice.update(noticeUpdateForm).then((data) => {
+      alert(data.message);
+      if (data.code == '200') {
+        dispatch('GET_MY_NOTICE_INFO');
+      }
+    });
+  },
+
+  async CREATE_NOTICE({ dispatch }, noticeSaveForm) {
+    api.notice.create(noticeSaveForm).then((data) => {
+      alert(data.message);
+      if (data.code == '200') {
+        dispatch('GET_MY_NOTICE_INFO');
+      }
+    });
+  },
+
+  async SHARE_CATEGORY({ dispatch }, categoryId) {
+    api.category.share(categoryId).then(() => {
+      dispatch('GET_MY_CATEGORY_INFO_ALL');
+    });
+  },
+  async GET_MY_CATEGORY_SHARE_INFO({ commit }) {
+    api.category.findShare().then((data) => {
+      commit('SET_SHARE_CATEGORY_INFO', data.data);
+    });
+  },
 };
 
 export default actions;

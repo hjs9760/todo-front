@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="header">
-      <img src="../../../public/image/todoLogo.png" alt="" />
+      <img src="../../../public/image/todoLogo.png" alt />
     </div>
 
     <Login />
@@ -16,20 +16,20 @@
 </template>
 
 <script>
-import Login from '@/components/login/Login';
-import { mapActions } from 'vuex';
+import Login from "@/components/login/Login";
+import { mapActions } from "vuex";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    Login,
+    Login
   },
   methods: {
     ...mapActions({
-      kakaoLogin: 'GET_KAKAO_LOGIN',
-      naverLogin: 'GET_NAVER_LOGIN',
-    }),
-  },
+      kakaoLogin: "GET_KAKAO_LOGIN",
+      naverLogin: "GET_NAVER_LOGIN"
+    })
+  }
 };
 </script>
 
@@ -49,7 +49,7 @@ body {
   margin: 0;
   padding: 0;
   background: #102a43;
-  background-image: url('https://uploads.codesandbox.io/uploads/user/c3fb8e8a-35ea-4232-b5d6-0f3c5373510b/LVs7-dots.png');
+  background-image: url("https://uploads.codesandbox.io/uploads/user/c3fb8e8a-35ea-4232-b5d6-0f3c5373510b/LVs7-dots.png");
   background-size: contain;
 }
 .footer,
@@ -68,7 +68,7 @@ body {
   }
   .links {
     display: flex;
-    font-family: 'Open Sans';
+    font-family: "Open Sans";
     span {
       padding: 0 10px;
       font-size: 18px;
@@ -79,7 +79,7 @@ body {
     }
   }
   .version {
-    font-family: 'Open Sans';
+    font-family: "Open Sans";
     padding: 0 10px;
     color: #9fb3c8;
     font-size: 12px;
@@ -89,7 +89,7 @@ body {
 .header {
   padding: 10px 20px;
   .logo {
-    font-family: 'Open Sans';
+    font-family: "Open Sans";
     letter-spacing: 3px;
     padding-top: 15px;
     padding-bottom: 15px;

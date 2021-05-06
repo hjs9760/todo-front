@@ -54,6 +54,12 @@ export const category = {
   delete(categoryId) {
     return request('post', `/category/delete/${categoryId}`);
   },
+  share(categoryId) {
+    return request('post', `/category/share/${categoryId}`);
+  },
+  findShare() {
+    return request('get', `/category/findShare`);
+  },
 };
 
 export const todo = {
@@ -83,5 +89,20 @@ export const section = {
   },
   delete(sectionId) {
     return request('post', `/section/delete/${sectionId}`);
+  },
+};
+
+export const notice = {
+  create(noticeSaveForm) {
+    return request('post', `/notice/save`, noticeSaveForm);
+  },
+  get() {
+    return request('get', `/notice/find`);
+  },
+  delete(noticeId) {
+    return request('post', `/notice/delete/${noticeId}`);
+  },
+  update(noticeUpdateForm) {
+    return request('post', `/notice/update`, noticeUpdateForm);
   },
 };

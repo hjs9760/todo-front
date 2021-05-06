@@ -31,6 +31,15 @@ const mutations = {
   SET_SECTIONID(state, sectionId) {
     state.sectionId = sectionId;
   },
+  SET_LEFT_TYPE(state, type) {
+    state.leftType = type;
+  },
+  SET_NOTICE_INFO(state, noticeInfo) {
+    state.noticeInfo = noticeInfo;
+  },
+  SET_SHARE_CATEGORY_INFO(state, shareCategoryInfo) {
+    state.shareCategoryInfo = shareCategoryInfo;
+  },
 };
 
 export default mutations;

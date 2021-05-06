@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="head">
     <h2 class="header">TodoList</h2>
     <form @submit="goSignUp" onsubmit="return false;">
       <div class="text3">아이디</div>
@@ -334,38 +334,43 @@ export default {
 }
 
 .input {
+  color: black;
   width: 300px;
   height: 20px;
+  border: black;
+  border: 2px ridge;
 }
 
 .input_id {
-  margin-left: 75px;
+  color: black;
+  margin-left: 60px;
   width: 300px;
   height: 20px;
+  border: 2px ridge;
 }
 
 .text2 {
-  color: whitesmoke;
+  color: black;
   margin-right: 275px;
 }
 
 .text3 {
-  color: whitesmoke;
+  color: black;
   margin-right: 260px;
 }
 
 .text4 {
-  color: whitesmoke;
+  color: black;
   margin-right: 249px;
 }
 
 .text6 {
-  color: whitesmoke;
+  color: black;
   margin-right: 220px;
 }
 
 .gender {
-  color: whitesmoke;
+  color: black;
   margin-right: 15px;
 }
 

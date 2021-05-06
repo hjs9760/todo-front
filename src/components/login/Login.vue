@@ -1,43 +1,18 @@
 <template>
   <div class="login">
     <el-card>
-      <h2 class="font">Login</h2>
-      <el-form
-        class="login-form"
-        :model="model"
-        ref="form"
-        @submit.native.prevent="login"
-      >
+      <h2>Login</h2>
+      <el-form class="login-form" :model="model" ref="form" @submit.native.prevent="login">
         <el-form-item prop="username">
-          <el-input
-            v-model="model.username"
-            placeholder="아이디를 입력하세요."
-            prefix-icon="fas fa-lock"
-          ></el-input>
+          <el-input v-model="model.username" placeholder="아이디를 입력하세요." prefix-icon="fas fa-lock"></el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input
-            v-model="model.password"
-            placeholder="암호를 입력하세요."
-            type="password"
-          ></el-input>
+          <el-input v-model="model.password" placeholder="암호를 입력하세요." type="password"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button
-            :loading="loading"
-            class="login-button"
-            type="primary"
-            @click="goSignIn"
-            >Login</el-button
-          >
+          <el-button :loading="loading" class="login-button" type="primary" @click="goSignIn">Login</el-button>
         </el-form-item>
-        <el-button
-          :loading="loading"
-          class="signup-button"
-          type="primary"
-          @click="goSignUp"
-          >SignUp</el-button
-        >
+        <el-button :loading="loading" class="signup-button" type="primary" @click="goSignUp">SignUp</el-button>
         <br />
 
         <a class="forgot-password" href>Forgot password ?</a>
@@ -47,26 +22,26 @@
 </template>
 
 <script>
-import axios from 'axios';
-import { mapMutations } from 'vuex';
-import CryptoJS from 'crypto-js';
+import axios from "axios";
+import { mapMutations } from "vuex";
+import CryptoJS from "crypto-js";
 
 export default {
-  name: 'login',
+  name: "login",
   data() {
     return {
       model: {
-        username: '',
-        password: '',
+        username: "",
+        password: ""
       },
-      loading: false,
+      loading: false
     };
   },
   methods: {
-    ...mapMutations(['SET_USERINFO', 'SET_TOKEN']),
+    ...mapMutations(["SET_USERINFO", "SET_TOKEN"]),
 
     simulateLogin() {
-      return new Promise((resolve) => {
+      return new Promise(resolve => {
         setTimeout(resolve, 800);
       });
     },
@@ -82,40 +57,40 @@ export default {
         this.model.username === this.validCredentials.username &&
         this.model.password === this.validCredentials.password
       ) {
-        this.$message.success('Login successfull');
+        this.$message.success("Login successfull");
       } else {
-        this.$message.error('Username or password is invalid');
+        this.$message.error("Username or password is invalid");
       }
     },
     goSignUp() {
-      this.$router.push('/signup');
+      this.$router.push("/signup");
     },
     goSignIn() {
-      if (this.username == '' || this.password == '') {
-        alert('아이디 또는 비밀번호를 입력하세요.');
+      if (this.username == "" || this.password == "") {
+        alert("아이디 또는 비밀번호를 입력하세요.");
         return;
       }
 
       axios
-        .post('http://localhost:8080/member/signIn', {
+        .post("http://localhost:8080/member/signIn", {
           userId: this.model.username,
-          pw: CryptoJS.AES.encrypt(this.model.password, 'todo').toString(),
+          pw: CryptoJS.AES.encrypt(this.model.password, "todo").toString()
         })
-        .then((res) => {
-          if (res.data.code == 'B003') {
+        .then(res => {
+          if (res.data.code == "B003") {
             alert(res.data.message);
-            this.$router.push('/checkEmail');
-          } else if (res.data.code == 'B001') {
+            this.$router.push("/checkEmail");
+          } else if (res.data.code == "B001") {
             alert(res.data.message);
-            this.$router.push('/login');
+            this.$router.push("/login");
           } else {
             this.SET_USERINFO(res.data.data);
             this.SET_TOKEN(res.data.token);
-            this.$router.push('/Main');
+            this.$router.push("/Main");
           }
         });
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -176,7 +151,7 @@ $teal: rgb(0, 124, 137);
   padding-bottom: 30px;
 }
 h2 {
-  font-family: 'Open Sans';
+  font-family: "Open Sans";
   letter-spacing: 1px;
   font-family: Roboto, sans-serif;
   padding-bottom: 20px;
@@ -194,8 +169,5 @@ a {
   width: 340px;
   display: flex;
   justify-content: center;
-}
-.font {
-  color: white;
 }
 </style>
