@@ -2,18 +2,23 @@
   <div class="header">
     <img src="../../../public/image/todoLogo.png" alt />
     <span class="button-container">
-      <my-button
-        v-for="(button, index) in buttons"
-        :key="index"
-        :iconType="button.iconType"
-        :callback="button.callback"
-      />
+      <div v-if="this.userInfo.name != undefined">{{this.userInfo.name}} 님 환영합니다.</div>
+      <div v-else>{{this.userInfo}} 님 환영합니다.</div>
+      <div>
+        <my-button
+          v-for="(button, index) in buttons"
+          :key="index"
+          :iconType="button.iconType"
+          :callback="button.callback"
+        />
+      </div>
     </span>
   </div>
 </template>
 
 <script>
 import MyButton from "@/components/common/MyButton.vue";
+import { mapState } from "vuex";
 
 export default {
   components: { MyButton },
@@ -23,6 +28,12 @@ export default {
       required: false,
       default: () => []
     }
+  },
+  data() {
+    return {};
+  },
+  computed: {
+    ...mapState(["userInfo"])
   }
 };
 </script>
@@ -40,6 +51,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  color: black;
 }
 
 .my-btn:hover {

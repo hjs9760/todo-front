@@ -1,6 +1,12 @@
 <template>
   <div style="float:right;">
-    {{categoryName}}
+    <v-tooltip top>
+      <template v-slot:activator="{ on, attrs }">
+        <span v-bind="attrs" v-on="on">{{categoryName}}</span>
+      </template>
+      <span>{{this.category.name}}</span>
+    </v-tooltip>
+
     <v-btn text color="grey" @click="openSectionCreateDialog()" class="btn">+ 추가</v-btn>
     <v-btn text color="grey" @click="openCategoryUpdateDialog()" class="btn">
       <v-icon>mdi-wrench</v-icon>

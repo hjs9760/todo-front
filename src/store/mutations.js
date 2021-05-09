@@ -13,6 +13,7 @@ const mutations = {
   SET_USERINFO(state, userInfo) {
     state.userInfo = userInfo;
   },
+
   SET_CATEGORY_INFO_ALL(state, categoryInfo) {
     state.categoryInfo = categoryInfo;
   },

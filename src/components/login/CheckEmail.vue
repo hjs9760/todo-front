@@ -1,6 +1,11 @@
 <template>
   <div>
-    <input type="text" v-model="emailCheckToken" placeholder="이메일에 도착한 인증코드를 입력해 주세요." />
+    <input
+      type="text"
+      v-model="emailCheckToken"
+      placeholder="이메일에 도착한 인증코드를 입력해 주세요."
+      style="width:400px; border: 2px ridge;"
+    />
     <button @click="checkEmail">인증</button>
   </div>
 </template>

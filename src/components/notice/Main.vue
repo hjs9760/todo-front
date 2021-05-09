@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 export default {
   data: () => ({
@@ -43,15 +43,12 @@ export default {
       { text: "삭제", value: "noticeId", sortable: false, align: "center" }
     ]
   }),
+  computed: {
+    ...mapState(["noticeInfo"])
+  },
   created() {
     this.GET_MY_NOTICE_INFO();
   },
-  props: {
-    noticeInfo: {
-      required: false
-    }
-  },
-
   methods: {
     ...mapActions([
       "DELETE_NOTICE",

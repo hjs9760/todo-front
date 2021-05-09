@@ -13,8 +13,8 @@ const state = {
   showType: 1,
   sectionId: '',
   leftType: 1,
-  noticeInfo: {},
-  shareCategoryInfo: {},
+  noticeInfo: [],
+  shareCategoryInfo: [],
 };
 
 export default state;

@@ -15,7 +15,7 @@
         <el-button :loading="loading" class="signup-button" type="primary" @click="goSignUp">SignUp</el-button>
         <br />
 
-        <a class="forgot-password" href>Forgot password ?</a>
+        <!-- <a class="forgot-password" href>Forgot password ?</a> -->
       </el-form>
     </el-card>
   </div>
@@ -80,9 +80,9 @@ export default {
           if (res.data.code == "B003") {
             alert(res.data.message);
             this.$router.push("/checkEmail");
-          } else if (res.data.code == "B001") {
+          } else if ((res.data.code == "B001", res.data.code == "B004")) {
             alert(res.data.message);
-            this.$router.push("/login");
+            return;
           } else {
             this.SET_USERINFO(res.data.data);
             this.SET_TOKEN(res.data.token);

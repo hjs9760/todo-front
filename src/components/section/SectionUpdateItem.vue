@@ -1,11 +1,16 @@
 <template>
   <div>
-    <span>
-      {{ this.sectionName }}
-      <v-btn text color="grey" @click="openSectionUpdateDialog()" style="float:right;">
-        <v-icon>mdi-wrench</v-icon>
-      </v-btn>
-    </span>
+    <v-tooltip top>
+      <template v-slot:activator="{ on, attrs }">
+        <span v-bind="attrs" v-on="on">{{ sectionNameString }}</span>
+      </template>
+      {{this.sectionName}}
+    </v-tooltip>
+
+    <v-btn text color="grey" @click="openSectionUpdateDialog()">
+      <v-icon>mdi-wrench</v-icon>
+    </v-btn>
+
     <!-- 섹션 생성 모달창 -->
     <v-dialog v-model="sectionUpdateDialog" persistent max-width="900px">
       <v-card>
@@ -51,7 +56,11 @@ export default {
   },
   data() {
     return {
-      sectionUpdateDialog: false
+      sectionUpdateDialog: false,
+      sectionNameString:
+        this.sectionName.length > 8
+          ? this.sectionName.slice(0, 7) + "..."
+          : this.sectionName
     };
   },
   methods: {

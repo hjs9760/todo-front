@@ -8,8 +8,8 @@
 
     <div class="footer">
       <div class="links">
-        <button @click="kakaoLogin" class="kakao-button">KakaoLogin</button>
-        <button @click="kakaoLogin" class="kakao-button">NaverLogin</button>
+        <v-btn @click="kakaoLogin" class="kakao-button" style="background-color: yellow;">KakaoLogin</v-btn>|||
+        <v-btn @click="naverLogin" class="naver-button" style="background-color: green;">NaverLogin</v-btn>
       </div>
     </div>
   </div>

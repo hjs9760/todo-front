@@ -34,7 +34,7 @@
           <tr>
             <td>상태</td>
             <td>
-              <v-btn @click="changeStatus('PLAN', '계획')" color="whitesmoke">계획</v-btn>
+              <v-btn @click="changeStatus('PLAN', '계획')" color="yellow">계획</v-btn>
               <v-btn @click="changeStatus('PROGRESS', '진행')" color="green">진행</v-btn>
               <v-btn @click="changeStatus('COMPLETE', '완료')" color="blue">완료</v-btn>
               <v-btn @click="changeStatus('PROBLEM', '문제')" color="red">문제</v-btn>

@@ -26,7 +26,7 @@
         ></my-todo>
       </div>
       <div v-else-if="leftType == 3">
-        <notice :noticeInfo="noticeInfo"></notice>
+        <notice></notice>
       </div>
       <div v-else-if="leftType == 4">
         <share></share>
@@ -105,8 +105,7 @@ export default {
       "eDate",
       "showType",
       "sectionId",
-      "leftType",
-      "noticeInfo"
+      "leftType"
     ])
   },
   created() {

@@ -1,7 +1,7 @@
 <template>
   <div style="width:1450px;">
     <div>
-      <v-btn @click="findTodoByStatus('PLAN')" color="whitesmoke">계획</v-btn>
+      <v-btn @click="findTodoByStatus('PLAN')" color="yellow">계획</v-btn>
       <v-btn @click="findTodoByStatus('PROGRESS')" color="green">진행</v-btn>
       <v-btn @click="findTodoByStatus('COMPLETE')" color="blue">완료</v-btn>
       <v-btn @click="findTodoByStatus('PROBLEM')" color="red">문제</v-btn>
