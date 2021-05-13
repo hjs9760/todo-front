@@ -123,7 +123,7 @@ const actions = {
   },
 
   async UPDATE_NOTICE({ dispatch }, noticeUpdateForm) {
-    api.notice.update(noticeUpdateForm).then((data) => {
+    api.notice.check(noticeUpdateForm).then((data) => {
       alert(data.message);
       if (data.code == '200') {
         dispatch('GET_MY_NOTICE_INFO');

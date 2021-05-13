@@ -102,7 +102,7 @@ export const notice = {
   delete(noticeId) {
     return request('post', `/notice/delete/${noticeId}`);
   },
-  update(noticeUpdateForm) {
-    return request('post', `/notice/update`, noticeUpdateForm);
+  check(noticeUpdateForm) {
+    return request('post', `/notice/check`, noticeUpdateForm);
   },
 };
