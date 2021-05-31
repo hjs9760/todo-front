@@ -136,7 +136,7 @@ const actions = {
       alert(data.message);
       if (data.code == '200') {
         dispatch('GET_MY_NOTICE_INFO');
-      }
+      } else return;
     });
   },
 
